@@ -1,0 +1,138 @@
+1.2.1                          28-August-2009
+---------------------------------------------
+- Fix item creation with RID's containing a ']'.
+- Fix ASAP parser not reading the entire command.
+
+1.2.0                            28-June-2009
+---------------------------------------------
+- Fix attribute joining in collection list results.
+- Buildsystem fixes for Mac OS.
+- Do not show a console window for akonadi_control on Windows.
+
+1.1.95                           23-June-2009
+---------------------------------------------
+- Fix item size handling.
+- Add support for retrieving collection statistics as part
+  of the AKLIST/AKLSUB commands.
+- Add support for collection size statistics.
+- Build fixes for Windows.
+- Support RID-based operations for CREATE, MODIFY and DELETE.
+- Avoid emitting unecessary change notifications when
+  modifying items or collections.
+- Add COLMOVE command.
+- Reduce number of database writes when modifying a collection.
+- Fix parsing of attributes containing CR or LF characters.
+
+1.1.90                           03-June-2009
+---------------------------------------------
+- Return the storage location for items in FETCH responses
+- Fix remode identifier encoding problems
+- Fix infinite loop when parsing RID lists
+- Fix parsing errors on stray newlines
+- Support RID-based operations for STORE and MOVE
+- Fix race on resource creation
+- Provide modified item parts in change notifications
+- Build system fixes
+
+1.1.85                            05-May-2009
+---------------------------------------------
+- Improved CMake scripts so it is possible to detect
+  the Akonadi version in projects that depend on it.
+- Simplified the check for existance of tables.
+- Add a dedicated item deletion command, to get rid of 
+  the old STORE/EXPUNGE which was extremely inefficient.
+- Some fixes to support sqlite in the future.
+- Soprano is required now.
+- Qt 4.5.0 is required now.
+- Support for collection retrieval by remote identifier.
+- Support for item retrieval based on the remote identifier.
+- Less useless debug output.
+- Fixed leak on socket error.
+- Various smaller bug fixes, see ChangeLog for a list.
+- Support for writing large payloads to a file.
+- New Item retrieval code.
+- Added a streaming IMAP parser, and ported code the use it.
+- Add support for manually restarting an agent instance.
+
+1.1.2                             30-Apr-2009
+---------------------------------------------
+- Avoid DBUS lockups, reported at: https://bugs.kde.org/182198
+- Update user mysql.conf only if global/local one's are newer
+
+1.1.1                             21-Jan-2009
+---------------------------------------------
+- Fix code that was not executed in a release build.
+- Require CMake 2.6.0 which fixes boost detection.
+- Don't try to restart an agent that has been deleted.
+
+1.1.0                             03-Jan-2009
+---------------------------------------------
+- Restart agents when their executable changed.
+- Buildsystem fixes to find and link boost on all platforms.
+- Improvements to the startup to prevent partial startup.
+- Include revision number in the version string when building from SVN.
+- Shut down when we lost the connection to the D-Bus session bus.
+- add some basic handling of command line args.
+- Add a D-Bus call to flush the notification queue.
+- Automatically fix world-writeable mySQL config files.
+- Fix for FreeBSD mysql path.
+
+1.0.81                            16-Dec-2008
+---------------------------------------------
+- Restore protocol backward compatibility with Akonadi 1.0.x servers.
+- Build system fixes.
+- Fix compiler warnings.
+- Fall back to the default server path if the configured one points
+  to a non-existing file.
+
+1.0.80                            19-Nov-2008
+---------------------------------------------
+- Query agent status information asynchronously and answer all queries from
+  cached values, reduces the risk of an agents blocking the Akonadi server.
+- Increase mysql limits to more realistical values.
+- Don't mark all new items as recent.
+- Changes so it can store the size of an item.
+- Better error detection.
+- Prevent translated month names in the protocol.
+- Some build fixes.
+- Handle multiline output correctly.
+- Terminate the control process when the server process failed to start.
+- Add the ability to debug or valgrind a resource right from the
+  beginning, similar to the way this can be done with KIO slaves.
+- Fix fetching of linked items in arbitrary collections.
+- Add notification support for item references in virtual collections.
+- Add LINK/UNLINK commands to edit references to items in virtual collections.
+- Add a way to notify agents that their configuration has been changed remotely.
+- Make sure that all modification times are stored in UTC time zone.
+- Unquoted date time with a lenght of 26 characters was not parsed properly.
+- Add serverside timestamp support for items.
+
+1.0.0                            22-July-2008
+---------------------------------------------
+- First official stable release
+- Bugfix: Unquoted date time with a lenght of
+  26 characters was not parsed properly.
+- Add serverside timestamp support for items.
+- Build system fixes (windows & automoc)
+
+0.82.0                           18-June-2008
+---------------------------------------------
+- Several build and installation fixes for windows and mac.
+- Some improvements in the build system.
+- Add item part namespaces.
+- Implemented all the fetch modes advertised in ItemFetchScope.
+- Notify already running clieants about all found types during startup.
+
+0.81.0                            10-May-2008
+---------------------------------------------
+- Fix bug where full part was not fetched when a partial part was available already.
+- Collection parsing optimalisation.
+- Optimization for quoted string parsing.
+- Use org.freedesktop namespace, instead of org.kde for the dbus interfaces.
+- Add support for version numbers for database and protocol.
+- Fixed foreach misusage.
+- Depend on external automoc package instead of a copy.
+
+0.80.0                            24-Apr-2008 
+---------------------------------------------
+- Initial release

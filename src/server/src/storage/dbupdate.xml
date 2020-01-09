@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (c) 2007 Volker Krause <vkrause@kde.org>
+
+    This library is free software; you can redistribute it and/or modify it
+    under the terms of the GNU Library General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or (at your
+    option) any later version.
+
+    This library is distributed in the hope that it will be useful, but WITHOUT
+    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Library General Public
+    License for more details.
+
+    You should have received a copy of the GNU Library General Public License
+    along with this library; see the file COPYING.LIB.  If not, write to the
+    Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+    02110-1301, USA.
+
+-->
+
+
+<!--
+  Akonadi Database Schema Update Description
+
+  update element:
+    text: SQL statement to execute for update
+    version attribute: the new schmema version
+    abortOnFailure attribute: if true, the update must succeed, otherwise failures are ignored
+-->
+<updates>
+
+  <update version="2" abortOnFailure="false">
+    ALTER TABLE LocationTable DROP COLUMN existCount;
+    ALTER TABLE LocationTable DROP COLUMN recentCount;
+    ALTER TABLE LocationTable DROP COLUMN unseenCount;
+    ALTER TABLE LocationTable DROP COLUMN firstUnseen;
+  </update>
+
+  <update version="3" abortOnFailure="false">
+    UPDATE LocationTable SET subscribed = true;
+  </update>
+
+  <update version="4" abortOnFailure="false">
+    ALTER TABLE LocationTable DROP COLUMN cachePolicyId;
+    ALTER TABLE ResourceTable DROP COLUMN cachePolicyId;
+    DROP TABLE CachePolicyTable;
+  </update>
+
+  <update version="8" abortOnFailure="false">
+    UPDATE parttable SET name = 'PLD:ENVELOPE' WHERE name = 'ENVELOPE';
+    UPDATE parttable SET name = 'PLD:RFC822' WHERE name = 'RFC822';
+    UPDATE parttable SET name = 'PLD:HEAD' WHERE name = 'HEAD';
+    UPDATE parttable SET name = concat( 'ATR:', name ) WHERE substr( name, 1, 4 ) != 'PLD:';
+  </update>
+
+  <!-- the initializer runs first, so we will have all the new tables and columns already
+       therefore we have to clean that up first -->
+  <update version="10" abortOnFailure="true">
+    DROP TABLE CollectionTable;
+    ALTER TABLE LocationTable RENAME TO CollectionTable;
+    ALTER TABLE PimItemTable DROP COLUMN collectionId;
+    ALTER TABLE PimItemTable CHANGE locationId collectionId BIGINT;
+    DROP TABLE CollectionAttributeTable;
+    ALTER TABLE LocationAttributeTable CHANGE locationId collectionId BIGINT;
+    ALTER TABLE LocationAttributeTable RENAME TO CollectionAttributeTable;
+    DROP TABLE CollectionMimeTypeRelation;
+    ALTER TABLE LocationMimeTypeRelation CHANGE Location_Id Collection_Id BIGINT NOT NULL DEFAULT '0';
+    ALTER TABLE LocationMimeTypeRelation RENAME TO CollectionMimeTypeRelation;
+    DROP TABLE CollectionPimItemRelation;
+    ALTER TABLE LocationPimItemRelation CHANGE Location_Id Collection_Id BIGINT NOT NULL DEFAULT '0';
+    ALTER TABLE LocationPimItemRelation RENAME TO CollectionPimItemRelation;
+  </update>
+
+  <update version="12" abortOnFailure="false">
+    ALTER TABLE PartTable CHANGE datasize datasize BIGINT;
+ </update>
+
+</updates>
