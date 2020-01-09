@@ -2,7 +2,7 @@
 Summary: PIM Storage Service
 Name:    akonadi
 Version: 1.2.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 Group:   System Environment/Libraries
 License: LGPLv2+
@@ -13,6 +13,9 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 # shrink default initial db size a bit (approx 140mb->28mb)
 %define mysql_conf_timestamp 20090220
 Patch1: akonadi-1.1.1-mysql_conf.patch
+
+# RHBZ#1073939
+Patch2: akonadi-1.2-symlink-socket-to-tmp.patch
 
 ## upstream patches
 
@@ -55,6 +58,8 @@ Requires: pkgconfig
 %setup -q 
 
 %patch1 -p1 -b .mysql_conf
+%patch2 -p1 -b .symlink
+
 touch -d %{mysql_conf_timestamp} server/src/storage/mysql-global.conf
 
 
@@ -119,6 +124,9 @@ fi
 
 
 %changelog
+* Mon Mar 10 2014 Daniel Vrátil <dvratil@redhat.com> 1.2.1-3
+- Backport couple upstream patches to support running Akonadi when $HOME is on AFS (resolves #1073939)
+
 * Mon Dec 07 2009 Rex Dieter <rdieter@fedoraproject.org> 1.2.1-2
 - restore mysql-related dependencies
 
